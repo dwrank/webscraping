@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import re
 from pprint import pprint
 from bs4 import BeautifulSoup
 
@@ -24,6 +25,7 @@ if __name__ == '__main__':
     url = "http://www.pythonscraping.com/pages/page3.html"
     soup = util.create_soup(url)
     
+    # get the info for the gifts
     gifts = soup.findAll(class_='gift')
     
     gift_list = []
@@ -38,3 +40,8 @@ if __name__ == '__main__':
         gift_list.append(d)
     
     pprint(gift_list)
+    
+    # find the gift images by regexp, beginning w/ ../img/gifts/img, ending w/ .jpg
+    imgs = soup.findAll('img', {'src': re.compile('\.\./img/gifts/img.*\.jpg')})
+    print('')
+    pprint(imgs)
